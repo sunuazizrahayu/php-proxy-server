@@ -19,7 +19,7 @@ $curl = curl_init("http://{$application_server}{$uri}");
 $catchHeaders = getallheaders();
 $headers = array();
 if(!empty($catchHeaders)) {
-  foreach ($h as $header => $value) {
+  foreach ($catchHeaders as $header => $value) {
     $headers[] = "$header: $value";
   }
 }
