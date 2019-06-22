@@ -15,12 +15,25 @@ $uri = $_SERVER['REQUEST_URI'];
 
 $curl = curl_init("http://{$application_server}{$uri}");
 
+// CATCH ALL HEADERS REQUEST
+$catchHeaders = getallheaders();
+$headers = array();
+if(!empty($catchHeaders)) {
+  foreach ($h as $header => $value) {
+    $headers[] = "$header: $value";
+  }
+}
+
+
 // HANDLE REQUEST
-if($_POST){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   curl_setopt($curl, CURLOPT_POST, 1);
   curl_setopt($curl,CURLOPT_POSTFIELDS,$_POST);
 }
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+
 
 $data = curl_exec($curl);
 
